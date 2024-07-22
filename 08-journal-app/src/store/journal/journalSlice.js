@@ -1,10 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 export const journalSlice = createSlice({
-  name: 'journal',
+  name: "journal",
   initialState: {
     isSaving: false,
-    messageSaved: '',
+    messageSaved: "",
     notes: [],
     activeNote: null,
     // activeNote: {
@@ -30,23 +30,25 @@ export const journalSlice = createSlice({
       state.notes = action.payload;
     },
     setSaving: (state, action) => {
-
+      state.isSaving = true;
+      state.messageSaved = "";
     },
-    updateNotes: (state, action) => {
-
+    updateNote: (state, action) => {
+      state.isSaving = false;
+      state.notes = state.notes.map((note) =>
+        note.id === action.payload.id ? action.payload : note
+      );
+      state.messageSaved = "Nota guardada correctamente";
     },
-    deleteNoteById: (state, action) => {
-
-    },
-
+    deleteNoteById: (state, action) => {},
   },
-})
+});
 export const {
   addNewEmptyNote,
-  deleteNoteById, 
+  deleteNoteById,
   savingNewNote,
-  setActiveNote, 
-  setNotes, 
-  setSaving, 
-  updateNotes, 
- } = journalSlice.actions;
+  setActiveNote,
+  setNotes,
+  setSaving,
+  updateNote,
+} = journalSlice.actions;
